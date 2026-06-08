@@ -297,6 +297,34 @@
 #define DE_N9 N9
 #define DE_N0 N0
 
+/* German symbol aliases (shifted) */
+#define DE_EXCL LS(N1)               // !
+#define DE_DQT  LS(N2)               // "
+#define DE_DLR  LS(N4)               // $
+#define DE_PERC LS(N5)               // %
+#define DE_AMPS LS(N6)               // &
+#define DE_SLSH LS(N7)               // /
+#define DE_LPRN LS(N8)               // (
+#define DE_RPRN LS(N9)               // )
+#define DE_EQL  LS(N0)               // =
+#define DE_QMRK LS(DE_SZ)            // ?
+#define DE_ASTR LS(DE_PLUS)          // *
+#define DE_QUOT LS(DE_POUND)         // '
+#define DE_COL  LS(DE_DOT)           // :
+#define DE_SEMI LS(DE_COMMA)         // ;
+#define DE_GT   LS(DE_LT)            // >
+#define DE_UNDS LS(DE_MINUS)         // _
+#define DE_HASH DE_POUND             // #
+
+/* German symbol aliases (AltGr) */
+#define DE_AT   RA(DE_Q)             // @
+#define DE_LBRC RA(N8)               // [
+#define DE_RBRC RA(N9)               // ]
+#define DE_LCBR RA(N7)               // {
+#define DE_RCBR RA(N0)               // }
+#define DE_BSLS RA(DE_SZ)            // backslash
+#define DE_PIPE RA(DE_LT)            // |
+
 
 /* Key positions */
 
@@ -863,6 +891,34 @@
             bindings = <&macro_tap>
                 , <&kp DOT>
                 , <&kp DOT>;
+        };
+
+        // Dead-key + space = literal glyph on German layout
+        de_caret: de_caret {
+            label = "DE_CARET";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <1>;
+            wait-ms = <1>;
+            bindings = <&kp DE_CIRCUM>, <&kp SPACE>;
+        };
+
+        de_grave: de_grave {
+            label = "DE_GRAVE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <1>;
+            wait-ms = <1>;
+            bindings = <&kp LS(DE_ACUTE)>, <&kp SPACE>;
+        };
+
+        de_tilde: de_tilde {
+            label = "DE_TILDE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            tap-ms = <1>;
+            wait-ms = <1>;
+            bindings = <&kp RA(DE_PLUS)>, <&kp SPACE>;
         };
     };
 };
@@ -1574,12 +1630,12 @@
 
         layer_Symbol {
             bindings = <
-               &none          &none         &none                 &none          &none                                                                                                        &none        &none      &none     &none   &none
-               &none      &kp GRAVE    &kp LS(N9)            &kp LS(N0)       &kp SEMI     &kp COMMA                                                                    &none                 &none        &none      &none     &none   &none
-          &kp LS(N1)       &kp LBKT  &kp LS(LBKT)          &kp LS(RBKT)       &kp RBKT  &kp LS(FSLH)                                                                  &kp DOT               &kp DEL  &kp LS(TAB)    &kp INS   &kp ESC   &none
-          &kp LS(N3)     &kp LS(N6)     &kp EQUAL         &kp LS(MINUS)     &kp LS(N4)    &kp LS(N8)                                                                &kp COMMA              &kp BSPC      &kp TAB  &kp SPACE   &kp RET   &none
-       &kp LS(GRAVE)  &kp LS(COMMA)  &kp LS(BSLH)             &kp MINUS    &kp LS(DOT)      &kp FSLH    &kp BSLH       &kp DOT  &kp LS(N8)   &none   &none   &none   &kp SEMI  &kp LS(SINGLE_QUOTE)      &kp SQT  &kp GRAVE  &kp BSLH   &none
- &symb_dotdot_v1_TKZ     &kp LS(N7)       &kp SQT  &kp LS(SINGLE_QUOTE)  &kp LS(EQUAL)                &kp LS(N5)  &kp LS(SEMI)  &kp LS(N2)   &none   &none   &none                        &sk RSHFT    &sk RCTRL   &sk RALT  &sk RGUI   &none
+ &none         &none         &none         &none         &none                                                                                                                         &none         &none        &none      &none      &none
+ &none         &de_grave     &kp DE_LPRN   &kp DE_RPRN   &kp DE_SEMI   &kp DE_COMMA                                                                                    &none         &none         &none        &none      &none      &none
+ &kp DE_EXCL   &kp DE_LBRC   &kp DE_LCBR   &kp DE_RCBR   &kp DE_RBRC   &kp DE_QMRK                                                                                     &kp DE_DOT    &kp DEL       &kp LS(TAB)  &kp INS    &kp ESC    &none
+ &kp DE_HASH   &de_caret     &kp DE_EQL    &kp DE_UNDS   &kp DE_DLR    &kp DE_ASTR                                                                                     &kp DE_COMMA  &kp BSPC      &kp TAB      &kp SPACE  &kp RET    &none
+ &de_tilde     &kp DE_LT     &kp DE_PIPE   &kp DE_MINUS  &kp DE_GT     &kp DE_SLSH   &kp DE_BSLS  &kp DE_DOT  &kp DE_ASTR  &none  &none  &none  &kp DE_SEMI  &kp DE_DQT  &kp DE_QUOT   &de_grave    &kp DE_BSLS  &none
+ &symb_dotdot_v1_TKZ &kp DE_AMPS &kp DE_QUOT &kp DE_DQT  &kp DE_PLUS                 &kp DE_PERC  &kp DE_COL  &kp DE_AT    &none  &none  &none               &sk RSHFT  &sk RCTRL     &sk RALT     &sk RGUI   &none
             >;
         };
 

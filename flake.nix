@@ -1,28 +1,25 @@
 {
   description = "Glove80 ZMK firmware (TailorKey layout)";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    zmk = {
-      url = "github:moergo-sc/zmk";
-      flake = false;
-    };
+  inputs.zmk = {
+    url = "github:moergo-sc/zmk";
+    flake = false;
   };
 
   outputs =
-    { nixpkgs, zmk, ... }:
+    { zmk, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
       # moergo's build pins its own nixpkgs; reuse it so the firmware matches
       # what their CI / cachix produces.
       firmware = import zmk {
         pkgs = import "${zmk}/nix/pinned-nixpkgs.nix" { inherit system; };
       };
+      keymap = ./config/glove80.keymap;
+      glove80_left = firmware.zmk.override { board = "glove80_lh"; inherit keymap; };
+      glove80_right = firmware.zmk.override { board = "glove80_rh"; inherit keymap; };
     in
     {
-      packages.${system}.default = import ./config {
-        inherit pkgs firmware;
-      };
+      packages.${system}.default = firmware.combine_uf2 glove80_left glove80_right;
     };
 }
